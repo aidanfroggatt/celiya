@@ -1,4 +1,7 @@
+
 'use client';
+import { Card } from '@/components/ui/card';
+import ReactMarkdown from 'react-markdown';
 
 export function ItineraryOutput({
   result,
@@ -11,8 +14,8 @@ export function ItineraryOutput({
   if (!result) return null;
 
   return (
-    <div className="mt-6 whitespace-pre-line bg-gray-50 p-4 rounded border">
-      {result}
-    </div>
+    <Card className="prose max-w-none">
+      <ReactMarkdown>{result}</ReactMarkdown>
+    </Card>
   );
 }

@@ -1,10 +1,29 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "../ui/textarea";
+
+const formSchema = z.object({
+  destination: z.string().min(2, { message: "Destination is required." }),
+  dates: z.string().min(2, { message: "Travel dates are required." }),
+  preferences: z.string().optional(),
+});
 
 export function ItineraryForm({
-  onSubmit
+  onSubmit,
 }: {
   onSubmit: (data: {
     destination: string;
@@ -12,50 +31,71 @@ export function ItineraryForm({
     preferences: string;
   }) => void;
 }) {
-  const [destination, setDestination] = useState('');
-  const [dates, setDates] = useState('');
-  const [preferences, setPreferences] = useState('');
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      destination: "",
+      dates: "",
+      preferences: "",
+    },
+  });
+
+  function handleSubmit(values: z.infer<typeof formSchema>) {
+    onSubmit({
+      ...values,
+      preferences: values.preferences ?? "",
+    });
+  }
 
   return (
-    <form
-      className="space-y-4"
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit({ destination, dates, preferences });
-      }}
-    >
-      <div>
-        <label className="block text-sm font-medium">Destination</label>
-        <input
-          className="w-full border rounded p-2"
-          value={destination}
-          onChange={(e) => setDestination(e.target.value)}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+        <FormDescription>
+          Fill out the form below to generate a personalized, celiac-friendly travel itinerary.
+        </FormDescription>
+        <FormField
+          control={form.control}
+          name="destination"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Destination</FormLabel>
+              <FormControl>
+                <Input className="w-full border rounded p-2" placeholder="e.g. Paris" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium">Travel Dates</label>
-        <input
-          className="w-full border rounded p-2"
-          value={dates}
-          onChange={(e) => setDates(e.target.value)}
+        <FormField
+          control={form.control}
+          name="dates"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Travel Dates</FormLabel>
+              <FormControl>
+                <Input className="w-full border rounded p-2" placeholder="e.g. July 1-7, 2025" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium">
-          Preferences (optional)
-        </label>
-        <textarea
-          className="w-full border rounded p-2"
-          value={preferences}
-          onChange={(e) => setPreferences(e.target.value)}
+        <FormField
+          control={form.control}
+          name="preferences"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Preferences (optional)</FormLabel>
+              <FormControl>
+                <Textarea className="w-full border rounded p-2" placeholder="e.g. vegan, museums, etc." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-
-      <Button type="submit" className="w-full">
-        Generate Itinerary
-      </Button>
-    </form>
+        <Button type="submit" className="w-full">
+          Generate Itinerary
+        </Button>
+      </form>
+    </Form>
   );
 }
