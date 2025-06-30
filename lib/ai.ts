@@ -39,7 +39,7 @@ Example output:
     model: 'llama3-8b-8192',
     messages: [{ role: 'user', content: prompt }],
     temperature: 0.7,
-    max_tokens: 1200
+    max_tokens: 3000 // Increased to allow for longer itineraries
   });
 
   return response.choices[0].message.content || 'No itinerary generated.';

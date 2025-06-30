@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Card, CardContent } from '@/components/ui/card';
-import ReactMarkdown from 'react-markdown';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import ReactMarkdown from "react-markdown";
 
 export function ItineraryOutput({
   result,
-  loading
+  loading,
 }: {
   result: string | null;
   loading: boolean;

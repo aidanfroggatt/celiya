@@ -8,8 +8,14 @@ const config: Config = {
     './lib/**/*.{ts,tsx}',
   ],
   theme: {
-    extend: {},
-  },
+    extend: {
+      colors: {
+        terracotta: "#B35C42",
+        leafy: "#2A4D33",
+        radish: "#E94B66",
+      }
+    }
+  }
 };
 
 export default config;

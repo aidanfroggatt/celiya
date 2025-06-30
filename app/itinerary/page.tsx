@@ -1,26 +1,22 @@
-'use client';
+"use client";
 
-import { ItineraryForm } from '@/components/itinerary/form';
-import { ItineraryOutput } from '@/components/itinerary/output';
-import { useState } from 'react';
-import { Separator } from '@/components/ui/separator';
+import { ItineraryForm, ItineraryFormProps } from "@/components/itinerary/form";
+import { ItineraryOutput } from "@/components/itinerary/output";
+import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
 
 export default function ItineraryPage() {
   const [itinerary, setItinerary] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleGenerate(formData: {
-    destination: string;
-    dates: string;
-    preferences: string;
-  }) {
+  async function handleGenerate(formData: ItineraryFormProps) {
     setLoading(true);
     setItinerary(null);
 
-    const res = await fetch('/api/generate', {
-      method: 'POST',
+    const res = await fetch("/api/generate", {
+      method: "POST",
       body: JSON.stringify(formData),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { "Content-Type": "application/json" },
     });
 
     const data = await res.json();

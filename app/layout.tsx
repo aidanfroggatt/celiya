@@ -1,15 +1,19 @@
-import Header from '@/components/header';
-import './globals.css';
-import { Providers } from './providers';
-import { Metadata } from 'next';
+import Header from "@/components/header";
+import { Metadata } from "next";
+import "./globals.css";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: 'Celiya – Gluten-Free Travel Itineraries',
+  title: "Celiya — Gluten-Free Travel Itineraries",
   description:
-    'Plan safe, celiac-friendly travel with Celiya. Instantly generate personalized itineraries for your next gluten-free adventure.',
+    "Plan safe, celiac-friendly travel with Celiya. Instantly generate personalized itineraries for your next gluten-free adventure.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
