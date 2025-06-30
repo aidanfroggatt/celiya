@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 const formSchema = z.object({
   destination: z.string().min(2, { message: "Destination is required." }),
@@ -31,6 +32,8 @@ export function ItineraryForm({
     preferences: string;
   }) => void;
 }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,19 +43,22 @@ export function ItineraryForm({
     },
   });
 
-  function handleSubmit(values: z.infer<typeof formSchema>) {
-    onSubmit({
+  async function handleSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    await onSubmit({
       ...values,
       preferences: values.preferences ?? "",
     });
+    setIsSubmitting(false);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        <FormDescription>
-          Fill out the form below to generate a personalized, celiac-friendly travel itinerary.
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <FormDescription className="text-center text-muted-foreground mb-4">
+          Enter your trip details below and we&apos;ll generate your gluten-free itinerary.
         </FormDescription>
+
         <FormField
           control={form.control}
           name="destination"
@@ -60,12 +66,13 @@ export function ItineraryForm({
             <FormItem>
               <FormLabel>Destination</FormLabel>
               <FormControl>
-                <Input className="w-full border rounded p-2" placeholder="e.g. Paris" {...field} />
+                <Input placeholder="e.g. Paris" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="dates"
@@ -73,12 +80,13 @@ export function ItineraryForm({
             <FormItem>
               <FormLabel>Travel Dates</FormLabel>
               <FormControl>
-                <Input className="w-full border rounded p-2" placeholder="e.g. July 1-7, 2025" {...field} />
+                <Input placeholder="e.g. July 1-7, 2025" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="preferences"
@@ -86,14 +94,18 @@ export function ItineraryForm({
             <FormItem>
               <FormLabel>Preferences (optional)</FormLabel>
               <FormControl>
-                <Textarea className="w-full border rounded p-2" placeholder="e.g. vegan, museums, etc." {...field} />
+                <Textarea
+                  placeholder="e.g. vegan, loves museums, hates hiking"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Generate Itinerary
+
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? "Generating..." : "Generate Itinerary"}
         </Button>
       </form>
     </Form>

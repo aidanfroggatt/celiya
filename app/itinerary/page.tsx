@@ -3,6 +3,7 @@
 import { ItineraryForm } from '@/components/itinerary/form';
 import { ItineraryOutput } from '@/components/itinerary/output';
 import { useState } from 'react';
+import { Separator } from '@/components/ui/separator';
 
 export default function ItineraryPage() {
   const [itinerary, setItinerary] = useState<string | null>(null);
@@ -28,9 +29,18 @@ export default function ItineraryPage() {
   }
 
   return (
-    <main className="max-w-2xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-6">Plan Your Celiac-Safe Trip</h1>
+    <main className="max-w-3xl mx-auto px-6 py-20">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-4">Plan Your Celiac-Safe Trip</h1>
+        <p className="text-muted-foreground text-lg">
+          Get a 100% gluten-free itinerary tailored to you — powered by AI.
+        </p>
+      </div>
+
       <ItineraryForm onSubmit={handleGenerate} />
+
+      <Separator className="my-12" />
+
       <ItineraryOutput result={itinerary} loading={loading} />
     </main>
   );
