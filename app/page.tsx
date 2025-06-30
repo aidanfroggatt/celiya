@@ -21,7 +21,12 @@ import {
   TypographyH2,
   TypographyP,
 } from "@/components/ui/typography";
-import { LucideMapPin, LucideShieldCheck, LucideWand2 } from "lucide-react";
+import {
+  LucideMapPin,
+  LucideShieldCheck,
+  LucideWand2,
+  WheatOffIcon,
+} from "lucide-react";
 import Link from "next/link";
 
 interface CardType {
@@ -112,7 +117,7 @@ export default function HomePage() {
   return (
     <main>
       <section>
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full place-items-center">
           <div className="flex flex-col gap-y-4">
             <TypographyH1>
               Travel Without Fear — Celiya has your back
@@ -128,6 +133,7 @@ export default function HomePage() {
               </Button>
             </Link>
           </div>
+          <WheatOffIcon className="h-full w-auto" />
         </div>
       </section>
       <Separator />

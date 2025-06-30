@@ -3,6 +3,7 @@
 import { ItineraryForm, ItineraryFormProps } from "@/components/itinerary/form";
 import { ItineraryOutput } from "@/components/itinerary/output";
 import { Separator } from "@/components/ui/separator";
+import { TypographyH1, TypographyP } from "@/components/ui/typography";
 import { useState } from "react";
 
 export default function ItineraryPage() {
@@ -25,19 +26,20 @@ export default function ItineraryPage() {
   }
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-20">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Plan Your Celiac-Safe Trip</h1>
-        <p className="text-muted-foreground text-lg">
-          Get a 100% gluten-free itinerary tailored to you — powered by AI.
-        </p>
-      </div>
-
-      <ItineraryForm onSubmit={handleGenerate} />
-
-      <Separator className="my-12" />
-
-      <ItineraryOutput result={itinerary} loading={loading} />
+    <main>
+      <section>
+        <div className="text-center">
+          <TypographyH1>Plan Your Celiac-Safe Trip</TypographyH1>
+          <TypographyP>
+            Get a 100% gluten-free itinerary tailored to you — powered by AI.
+          </TypographyP>
+        </div>
+        <div className="flex flex-col gap-y-6">
+          <ItineraryForm onSubmit={handleGenerate} />
+          <Separator />
+          <ItineraryOutput result={itinerary} loading={loading} />
+        </div>
+      </section>
     </main>
   );
 }
