@@ -16,6 +16,11 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  TypographyH1,
+  TypographyH2,
+  TypographyP,
+} from "@/components/ui/typography";
 import { LucideMapPin, LucideShieldCheck, LucideWand2 } from "lucide-react";
 import Link from "next/link";
 
@@ -47,7 +52,7 @@ const CARDS: CardType[] = [
     description: undefined,
     content:
       "Get instant itineraries curated specifically for celiac-safe travel — no generic suggestions, only what you can eat and explore.",
-    color: "text-terracotta",
+    color: "var(--terracotta)",
   },
   {
     icon: LucideShieldCheck,
@@ -55,7 +60,7 @@ const CARDS: CardType[] = [
     description: undefined,
     content:
       "Every restaurant and activity is checked for 100% gluten-free compatibility. Trust your trip with data-driven safety.",
-    color: "text-leafy",
+    color: "var(--leafy)",
   },
   {
     icon: LucideWand2,
@@ -63,7 +68,7 @@ const CARDS: CardType[] = [
     description: undefined,
     content:
       "Our intelligent planner learns your preferences and crafts the perfect trip with just a few clicks. Magic, not spreadsheets.",
-    color: "text-radish",
+    color: "var(--radish)",
   },
 ];
 
@@ -107,43 +112,52 @@ export default function HomePage() {
   return (
     <main>
       <section>
-        <h1>Travel Without Fear — Celiya has your back</h1>
-        <p>
-          Celiya is your AI-powered travel planner for celiacs. Discover 100%
-          gluten-free itineraries tailored to your destination, preferences, and
-          safety needs — in seconds.
-        </p>
-        <Link href="/itinerary">
-          <Button size="lg" className="cursor-pointer">
-            Plan My Trip
-          </Button>
-        </Link>
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full">
+          <div className="flex flex-col gap-y-4">
+            <TypographyH1>
+              Travel Without Fear — Celiya has your back
+            </TypographyH1>
+            <TypographyP>
+              Celiya is your AI-powered travel planner for celiacs. Discover
+              100% gluten-free itineraries tailored to your destination,
+              preferences, and safety needs — in seconds.
+            </TypographyP>
+            <Link href="/itinerary">
+              <Button size="lg" className="cursor-pointer">
+                Plan My Trip
+              </Button>
+            </Link>
+          </div>
+        </div>
       </section>
       <Separator />
 
       <section>
-        {CARDS.map(
-          ({ icon: Icon, title, description, content, color }: CardType) => (
-            <Card key={title}>
-              <CardHeader>
-                <Icon className={`${color} h-8 w-8 mb-4`} />
-                <CardTitle>{title}</CardTitle>
-                {description && (
-                  <CardDescription>{description}</CardDescription>
-                )}
-              </CardHeader>
-              <CardContent>
-                <p>{content}</p>
-              </CardContent>
-            </Card>
-          )
-        )}
+        <TypographyH2>Why Celiya?</TypographyH2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6">
+          {CARDS.map(
+            ({ icon: Icon, title, description, content, color }: CardType) => (
+              <Card key={title}>
+                <CardHeader>
+                  <Icon style={{ color: color }} className="h-8 w-8 mb-4" />
+                  <CardTitle>{title}</CardTitle>
+                  {description && (
+                    <CardDescription>{description}</CardDescription>
+                  )}
+                </CardHeader>
+                <CardContent>
+                  <p>{content}</p>
+                </CardContent>
+              </Card>
+            )
+          )}
+        </div>
       </section>
 
       <Separator />
 
       <section>
-        <h2>How Celiya Works</h2>
+        <TypographyH2>How Celiya Works?</TypographyH2>
         <Tabs defaultValue="step1">
           <TabsList>
             {STEP_ITEMS.map(({ value, label }: StepType) => (
@@ -163,7 +177,7 @@ export default function HomePage() {
                     )}
                   </CardHeader>
                   <CardContent>
-                    <p>{content}</p>
+                    <TypographyP>{content}</TypographyP>
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -175,7 +189,7 @@ export default function HomePage() {
       <Separator />
 
       <section>
-        <h2>Frequently Asked Questions</h2>
+        <TypographyH2>Frequently Asked Questions</TypographyH2>
         <Accordion type="single" collapsible>
           {FAQ_ITEMS.map(({ question, answer }: FaqType) => (
             <AccordionItem key={question} value={question}>
