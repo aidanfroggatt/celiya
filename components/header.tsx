@@ -14,7 +14,7 @@ const Header = () => {
         </Link>
 
         <nav className="flex items-center space-x-4">
-          <Link href="/itinerary">
+          <Link href="/plan">
             <Button className="cursor-pointer">Try now</Button>
           </Link>
           <ModeToggle />

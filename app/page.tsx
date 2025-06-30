@@ -120,14 +120,17 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 w-full place-items-center">
           <div className="flex flex-col gap-y-4">
             <TypographyH1>
-              Travel Without Fear — Celiya has your back
+              Travel Without Fear —{" "}
+              <span style={{ color: "var(--terracotta)" }}>Ce</span>
+              <span style={{ color: "var(--leafy)" }}>li</span>
+              <span style={{ color: "var(--radish)" }}>ya</span> has your back
             </TypographyH1>
             <TypographyP>
               Celiya is your AI-powered travel planner for celiacs. Discover
               100% gluten-free itineraries tailored to your destination,
               preferences, and safety needs — in seconds.
             </TypographyP>
-            <Link href="/itinerary">
+            <Link href="/plan">
               <Button size="lg" className="cursor-pointer">
                 Plan My Trip
               </Button>

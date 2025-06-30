@@ -1,16 +1,23 @@
-import { OpenAI } from 'openai';
+import { OpenAI } from "openai";
 
 const openai = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
-  baseURL: 'https://api.groq.com/openai/v1',
+  baseURL: "https://api.groq.com/openai/v1",
 });
 
 export async function generateCeliacItinerary(
   destination: string,
-  dates: string,
+  startDate: Date,
+  endDate: Date,
   preferences: string
 ): Promise<string> {
-  const prompt = `You are a celiac travel food planner. Your job is to create a detailed, day-by-day gluten-free food itinerary for someone visiting ${destination} on ${dates}.
+  const start = startDate instanceof Date ? startDate : new Date(startDate);
+  const end = endDate instanceof Date ? endDate : new Date(endDate);
+
+  const formattedStartDate = start.toISOString().split("T")[0];
+  const formattedEndDate = end.toISOString().split("T")[0];
+
+  const prompt = `You are a celiac travel food planner. Your job is to create a detailed, day-by-day gluten-free food itinerary for someone visiting ${destination} from ${formattedStartDate} to ${formattedEndDate}.
 
 Instructions:
 - Only include restaurants that are 100% dedicated gluten free. If none are available for a meal, then and only then, include a restaurant with a dedicated gluten free menu that is highly reviewed as safe for celiacs. Clearly mark these as "dedicated GF menu, not 100% GF".
@@ -24,7 +31,7 @@ Instructions:
 - Format the output in clear Markdown, using headings for each day, and bullet points for each meal. Use bold for restaurant names. Place links in markdown format: [text](url).
 - If you must include a non-100% GF restaurant, add a warning note in italics.
 - At the end, add a section for grocery stores and safe brands if needed.
-${preferences ? `- Additional preferences: ${preferences}` : ''}
+${preferences ? `- Additional preferences: ${preferences}` : ""}
 
 Example output:
 
@@ -36,11 +43,11 @@ Example output:
 ---`;
 
   const response = await openai.chat.completions.create({
-    model: 'llama3-8b-8192',
-    messages: [{ role: 'user', content: prompt }],
+    model: "llama3-8b-8192",
+    messages: [{ role: "user", content: prompt }],
     temperature: 0.7,
-    max_tokens: 3000 // Increased to allow for longer itineraries
+    max_tokens: 3000,
   });
 
-  return response.choices[0].message.content || 'No itinerary generated.';
+  return response.choices[0].message.content || "No itinerary generated.";
 }
